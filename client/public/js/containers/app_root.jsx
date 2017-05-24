@@ -51,8 +51,8 @@ function mapDispatchToProps(dispatch) {
     initializeRun(appId, runId) {
       dispatch(initializeRun(appId, runId));
     },
-    initializeApp(appId, runId) {
-      dispatch(initializeApp(appId, runId));
+    initializeApp: (app) => (appId) => {
+      dispatch(initializeApp(appId, app));
     },
     onClickColorize() {
       dispatch(clickColorize());
@@ -88,6 +88,9 @@ function mapDispatchToProps(dispatch) {
 
 function mergeProps(stateProps, dispatchProps) {
   return Object.assign({}, dispatchProps, stateProps, {
+    initializeApp: dispatchProps.initializeApp(
+      stateProps.app,
+    ),
     clickRun: dispatchProps.clickRun(
       stateProps.app.id,
       stateProps.app.run.id,
